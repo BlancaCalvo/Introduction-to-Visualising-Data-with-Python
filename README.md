@@ -22,4 +22,5 @@ Lab 2:
     - Combining graphs
     - Creating grid of graphs
 
-Labs 3 and 4: Interactive graphs with bokeh: scatterplot and heatmap
+Labs 3 and 4: 
+- Interactive graphs with bokeh: scatterplot and heatmap
