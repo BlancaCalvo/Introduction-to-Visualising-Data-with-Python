@@ -7,7 +7,6 @@ import seaborn as sns
 
 # STEP 1: import the data
 w_temperature_data = pd.read_csv('data/GlobalTemperatures.csv', sep=',', index_col = False, parse_dates=['dt'])
-
 w_temperature_data.rename(columns={'dt':'date'}, inplace=True) # we do this because we have a package called dt and it could make things confusing
 
 # the dt package allows us to extract the month and the year from a full date
@@ -17,16 +16,17 @@ w_temperature_data['month'] = w_temperature_data.date.dt.month
 # creating a range for the figure, we will need this later!
 years = list(w_temperature_data.year)
 months = list(w_temperature_data.month)
-years_range =(years[0], years[-1])
+years_range = (years[0], years[-1])
 months_range = (months[0], months[-1])
 
 # STEP 2: map the colors to our data
 pal = sns.color_palette("coolwarm", 8) # we get a palette with 8 different colors, seborn palettes: https://seaborn.pydata.org/tutorial/color_palettes.html
 colors = pal.as_hex() # we get the values of those colors
+#colors = ['dskfjsd', 'lkdjf', 'skdf']
 colormap = LinearColorMapper(palette=colors, low=w_temperature_data.LandAverageTemperature.min(), 
 										high=w_temperature_data.LandAverageTemperature.max()) # note that we are working with linear data here
 
-# STEP 3: create the data source for the interactive graph
+# STEP 3: create the data source for the interactive graph: it works like a matrix
 source = ColumnDataSource(data={ 
 	'x' : w_temperature_data.year,
 	'y' : w_temperature_data.month,
@@ -40,10 +40,11 @@ p = figure(title="World temperature",
            tools="hover,save,pan,box_zoom,reset,wheel_zoom", # the hover tool adds the label to each data point when the mouse is on it
            tooltips=[('Year', '@x'), ('Temperature', '@value')]) # this tells what's going to be displayed by hover
 
-# STEP 5: fill it with rectanbles
-p.rect(x="x", y="y", width=1, height=1, # height and width of the rectangles
-       source=source,
-       fill_color={'field': 'value', 'transform': colormap},
+# STEP 5: fill it with rectangles, there is no such thing as heatmap() function in bokeh
+p.rect(x="x", y="y", # assign x and y from the ColumnDataSource object
+        width=1, height=1, # height and width of the rectangles
+       source=source, # the ColumnDataSource object we have create in STEP 3
+       fill_color={'field': 'value', 'transform': colormap}, # the colors are going to be according to the value
        line_color=None)
 
 # STEP 6: add elements to the interactive graph --> NEXT WEEK MATERIAL

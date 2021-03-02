@@ -14,14 +14,15 @@ w_temperature_data['year'] = w_temperature_data.date.dt.year
 w_temperature_data['month'] = w_temperature_data.date.dt.month
 
 # filter the data to make it a bit less complicated
-countries = ["Albania", "Austria", "Netherlands (Europe)"]
+countries = ["Argentina", "Spain", "Norway"]
 w_temperature_data = w_temperature_data[w_temperature_data.Country.isin(countries)]
-w_temperature_data = w_temperature_data[w_temperature_data.month == 1]
+w_temperature_data = w_temperature_data[w_temperature_data.month == 1] # I select just January
+#w_temperature_data = w_temperature_data[w_temperature_data.year.isin(['1850', '1875', '1900', '1925', '1950', '1975', '2000'])]
 
 # STEP 2: map the colors to our data
-pal = sns.color_palette("hls", 3) # 3 is the number of colors to extract from the palette
+pal = sns.color_palette("hls", 3) # 3 is the number of colors to extract from the palette, that's because we have 3 countries
 colors = pal.as_hex() # get the values of those colors. We could also have written the name/numbers of some colors
-#print(colors) # you can observe that this is just a string of color values
+#print(colors) # if you uncomment this line you can observe that this is just a string of color values
 colormap = CategoricalColorMapper(palette=colors, 
 				factors=w_temperature_data['Country'].unique()) # note that we are working with categorical data here, so we need one color per category
 				#factors=list(set(w_temperature_data['Country']))) # set() is similar to unique(), but makes the data of type 'set'

@@ -55,7 +55,7 @@ p = figure(title="World temperature",
            tools="hover,save,pan,box_zoom,reset,wheel_zoom", # the hover tool adds the label to each data point when the mouse is on it
            tooltips=[('Year', '@x'), ('Value', '@value')]) # this tells what's going to be displayed by hover
 
-# STEP 5: fill it with rectanbles
+# STEP 5: fill it with rectangles
 p.rect(x="x", y="y", width=1, height=1, # height and width of the rectangles
        source=source,
        fill_color={'field': 'value', 'transform': colormap},
@@ -66,9 +66,10 @@ p.rect(x="x", y="y", width=1, height=1, # height and width of the rectangles
 color_bar = ColorBar(color_mapper=colormap, major_label_text_font_size="10pt",
 	ticker=BasicTicker(desired_num_ticks=len(colors)),
 	border_line_color=None, location=(0, 0))
+
 p.add_layout(color_bar, 'right')
 
-# ADD AN INTERACTIVE SELECT!!!
+# ADD AN INTERACTIVE SELECT --> DROPDOWN MENU
 # we create the dropdown to be able to choose between variables
 menu = Select(options=['Land Average Temperature', 'Land Average Temperature Uncertainty'],
 	value='Land Average Temperatures', title='Variable')
@@ -93,7 +94,8 @@ menu.on_change('value', update_plot) # we link the function to the dropdown menu
 # STEP 7: design our layout
 layout = column (p, menu) # we create the layout in a column shape
 
-output_file = ('heatmap.html') # we output the html file
+output_file = ('heatmap.html') # we output the html file, which won't be interactive
 
 # STEP 8: run the server behind the visualisation!
 curdoc().add_root(layout) 
+

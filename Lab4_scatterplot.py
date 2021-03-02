@@ -58,15 +58,21 @@ p.circle(x = 'year', y = 'temperature', source = source, # here we assign the da
 # STEP 6: add elements to the interactive graph 
 # SLIDER ELEMENT
 slider_month = Slider(start = 1, end = 12, 
-                     step = 1, value = 1, title = 'Months to plot')
+                     step = 1, value = 1, title = 'Month to plot')
 # CHECKBOX ELEMENT
 checkbox_selection = CheckboxGroup(labels=list(data.Country.unique()), 
-                                  active = [0, 1])
+                                  active = [0, 1, 2, 3, 4, 5]) # default checkboxes to be active when opening the plot, right now: the 6 countries will be
+                                  #active = [0, 3, 5]) # default checkboxes to be active when opening the plot, right now: the 6 countries will be
 
 def update(attrname, old, new):
-    # Get the current slider values
+    # Get the current slider value
+    print(slider_month.value) # this line should be commented, it's jut here to show the behaviour of the slider
     k = slider_month.value
+
+    # Get the current checkbox slections
+    print(checkbox_selection.active) # this line should be commented, it's jut here to show the behaviour of the checkbox
     checkbox_to_plot = [checkbox_selection.labels[i] for i in checkbox_selection.active]
+
     # Generate the new curve
     source.data = {
     	'year' : data[(data.month == k) & (data.Country.isin(checkbox_to_plot))].year,
