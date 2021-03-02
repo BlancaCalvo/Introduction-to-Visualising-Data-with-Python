@@ -22,5 +22,19 @@ Lab 2:
     - Combining graphs
     - Creating grid of graphs
 
-Labs 3 and 4: 
-- Interactive graphs with bokeh: scatterplot and heatmap
+Lab 3: 
+- Introduction to bokeh plot structure
+- Basic interactive elements
+    - Hover
+    - Save
+    - Pan
+    - Box Zoom
+    - Reset
+    - Wheel Zoom
+
+Lab 4: 
+- Server
+- Advanced interactive elements
+    - Sliders
+    - Checkboxes
+    - Dropdown menus
